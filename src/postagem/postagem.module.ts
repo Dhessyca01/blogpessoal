@@ -6,7 +6,7 @@ import { TemaModule } from "src/tema/tema.module";
 import { TemaService } from "src/tema/services/tema.service";
 import { Postagem } from "./entities/postagem.entity";
 
-// classe principal do módulo, onde seram registrada todas as classes
+
 @Module({
     imports: [TypeOrmModule.forFeature([Postagem]), TemaModule],
     providers: [PostagemService, TemaService],

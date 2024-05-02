@@ -1,26 +1,41 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
-import { Tema } from "src/tema/entities/tema.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Tema } from "../../tema/entities/tema.entity";
+import { Usuario } from "../../usuário/entities/usuario.entity";
 
-@Entity({ name: 'tb_postagens' })
+
+@Entity({name: "tb_postagens"})
 export class Postagem {
-    @PrimaryGeneratedColumn() //PK com auto incremento
-    id: number;
 
-    @IsNotEmpty() //define que o valor não pode ser vazio (not full)
-    @Column({ length: 100, nullable: false })
-    titulo: string;
+    @ApiProperty()  
+    @PrimaryGeneratedColumn()    
+    id: number
 
+    @ApiProperty()  
     @IsNotEmpty()
-    @Column({ length: 1000, nullable: false })
-    texto: string;
+    @Column({length: 100, nullable: false})
+    titulo: string
 
+    @ApiProperty()  
+    @IsNotEmpty()
+    @Column({length: 1000, nullable: false})
+    texto: string
+
+    @ApiProperty()  
     @UpdateDateColumn()
-    data: Date;
-
-    //relação com a tabela tema
+    data: Date
+    
+    @ApiProperty({ type: () => Tema })  
     @ManyToOne(() => Tema, (tema) => tema.postagem, {
-        onDelete: "CASCADE" //se apagar postagem na tb tema, será apago na tb postagens também
+        onDelete: "CASCADE"
     })
     tema: Tema
+
+    @ApiProperty({ type: () => Usuario })  
+    @ManyToOne(() => Usuario, (usuario) => usuario.postagem, {
+        onDelete: "CASCADE"
+    })
+    usuario: Usuario
+
 }

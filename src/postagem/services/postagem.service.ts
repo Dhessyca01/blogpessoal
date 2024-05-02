@@ -1,4 +1,5 @@
-import { TemaService } from "../../tema/services/tema.service";
+/* eslint-disable prefer-const */
+import { TemaService } from './../../tema/services/tema.service';
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Postagem } from "../entities/postagem.entity";
@@ -15,7 +16,8 @@ export class PostagemService{
     async findAll(): Promise<Postagem[]>{
         return await this.postagemRepository.find({
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }
         });
 
@@ -24,12 +26,13 @@ export class PostagemService{
 
     async findById(id: number): Promise<Postagem> {
 
-        const postagem = await this.postagemRepository.findOne({
+        let postagem = await this.postagemRepository.findOne({
             where:{
                 id
             },
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }
         });
 
@@ -49,7 +52,8 @@ export class PostagemService{
                 titulo: ILike(`%${titulo}%`)
             },
             relations: {
-                tema: true
+                tema: true,
+                usuario: true
             }
         })
 
@@ -61,7 +65,7 @@ export class PostagemService{
         // Caso o tema tenha sido preenchido
         if (postagem.tema){
 
-            const tema = await this.temaService.findById(postagem.tema.id)
+            let tema = await this.temaService.findById(postagem.tema.id)
 
             if(!tema)
                 throw new HttpException('Tema não foi encontrado!', HttpStatus.NOT_FOUND)
@@ -77,7 +81,7 @@ export class PostagemService{
 
     async update(postagem: Postagem): Promise<Postagem>{
         
-        const buscaPostagem: Postagem = await this.findById(postagem.id);
+        let buscaPostagem: Postagem = await this.findById(postagem.id);
         
         // Verifica se a postagem existe
         if (!buscaPostagem || !postagem.id)
@@ -86,7 +90,7 @@ export class PostagemService{
          // Caso o tema tenha sido preenchido
         if (postagem.tema){
 
-            const tema = await this.temaService.findById(postagem.tema.id)
+            let tema = await this.temaService.findById(postagem.tema.id)
 
             if(!tema)
                 throw new HttpException('Tema não foi encontrado!', HttpStatus.NOT_FOUND)
@@ -102,7 +106,7 @@ export class PostagemService{
 
     async delete(id: number): Promise<DeleteResult>{
         
-        const buscaPostagem: Postagem = await this.findById(id);
+        let buscaPostagem: Postagem = await this.findById(id);
         
         if (!buscaPostagem)
             throw new HttpException('Postagem não foi encontrada!', HttpStatus.NOT_FOUND)
