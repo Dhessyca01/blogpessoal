@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppController } from './app.controller';
+import { AuthModule } from './auth/auth.module';
 import { PostagemModule } from './postagem/postagem.module';
 import { TemaModule } from './tema/tema.module';
-import { AuthModule } from './auth/auth.module';
+import { ProdService } from './data/services/Prod.service';
 import { UsuarioModule } from './usuário/usuario.module';
-import { AppController } from './app.controller';
-import { ConfigModule } from '@nestjs/config';
-import { ProdService } from './data/services/prod.service';
-
 
 @Module({
   imports: [

@@ -1,8 +1,8 @@
 import { JwtService } from '@nestjs/jwt';
-import { UsuarioService } from '../../usuário/services/usuario.service';
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Bcrypt } from '../bcrypt/bcrypt';
 import { UsuarioLogin } from '../entities/usuariologin.entity';
+import { UsuarioService } from '../../usuário/services/usuario.service';
 
 
 @Injectable()
@@ -33,12 +33,9 @@ export class AuthService{
 
     async login(usuarioLogin: UsuarioLogin){
 
-        const payload = { sub: usuarioLogin.usuario }
+        const payload = { sub: usuarioLogin.usuario}
 
-        const buscaUsuario = await this.usuarioService.findByUsuario(usuarioLogin.usuario);
-
-        if(!buscaUsuario)
-            throw new HttpException('Usuário não Encontrado!', HttpStatus.NOT_FOUND)
+        const buscaUsuario = await this.usuarioService.findByUsuario(usuarioLogin.usuario)
 
         return{
             id: buscaUsuario.id,

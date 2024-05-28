@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Tema } from "./entities/tema.entity";
@@ -10,5 +11,4 @@ import { TemaController } from "./controllers/tema.controller";
     controllers: [TemaController],
     exports: [TypeOrmModule]
 })
-
-export class TemaModule {};
+export class TemaModule {}

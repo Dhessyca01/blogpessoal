@@ -43,46 +43,40 @@ export class UsuarioService {
         });
 
         if (!usuario)
-            throw new HttpException('Usuario não encontrado!', HttpStatus.NOT_FOUND);
+            throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
 
         return usuario;
 
     }
 
-    async create(objetoUsuario: Usuario): Promise<Usuario> {
+    async create(usuario: Usuario): Promise<Usuario> {
         
-        let buscaUsuario = await this.findByUsuario(objetoUsuario.usuario);
+        let buscaUsuario = await this.findByUsuario(usuario.usuario);
 
         if (!buscaUsuario) {
-
-            if (!objetoUsuario.foto)
-                objetoUsuario.foto = 'https://i.imgur.com/Sk5SjWE.jpg'
-            
-            objetoUsuario.senha = await this.bcrypt.criptografarSenha(objetoUsuario.senha)
-            return await this.usuarioRepository.save(objetoUsuario);
+            usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
+            return await this.usuarioRepository.save(usuario);
         }
 
-        throw new HttpException("O Usuario ja existe!", HttpStatus.BAD_REQUEST);
+        throw new HttpException("O Usuário (e-mail) já existe!", HttpStatus.BAD_REQUEST);
 
     }
 
-    async update(objetoUsuario: Usuario): Promise<Usuario> {
+    async update(usuario: Usuario): Promise<Usuario> {
 
-        let updateUsuario: Usuario = await this.findById(objetoUsuario.id);
-        let buscaUsuario = await this.findByUsuario(objetoUsuario.usuario);
+        let updateUsuario: Usuario = await this.findById(usuario.id);
+        let buscaUsuario = await this.findByUsuario(usuario.usuario);
 
         if (!updateUsuario)
             throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
 
-        if (buscaUsuario && buscaUsuario.id !== objetoUsuario.id)
-            throw new HttpException('Usuário (e-mail) já Cadastrado!', HttpStatus.BAD_REQUEST);
+        if (buscaUsuario && buscaUsuario.id !== usuario.id)
+            throw new HttpException('O Usuário (e-mail) já existe!', HttpStatus.BAD_REQUEST);
 
-        if (!objetoUsuario.foto)
-            objetoUsuario.foto = 'https://i.imgur.com/Sk5SjWE.jpg'
-
-        objetoUsuario.senha = await this.bcrypt.criptografarSenha(objetoUsuario.senha)
-        return await this.usuarioRepository.save(objetoUsuario);
+        usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
+        return await this.usuarioRepository.save(usuario);
 
     }
+
 
 }

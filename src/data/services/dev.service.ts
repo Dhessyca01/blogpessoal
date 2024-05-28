@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier*/
 import { Injectable } from "@nestjs/common";
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
 import { Postagem } from "../../postagem/entities/postagem.entity";
@@ -21,3 +22,4 @@ export class DevService implements TypeOrmOptionsFactory {
     };
   }
 }
+
