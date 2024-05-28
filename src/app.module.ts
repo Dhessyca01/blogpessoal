@@ -5,8 +5,8 @@ import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { PostagemModule } from './postagem/postagem.module';
 import { TemaModule } from './tema/tema.module';
-import { ProdService } from './data/services/Prod.service';
 import { UsuarioModule } from './usuário/usuario.module';
+import { ProdService } from './data/services/prod.service';
 
 @Module({
   imports: [
